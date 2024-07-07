@@ -3,60 +3,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:signaturePad="clr-namespace:Syncfusion.Maui.SignaturePad;assembly=Syncfusion.Maui.SignaturePad"
              x:Class="Ejercicio2._2_Grupo2.Views.PageInit"
-             Title="PageInit">
+             Title="FIRMA DIGITAL"
+             Background="White">
 
     <StackLayout>
-        <signaturePad:SfSignaturePad 
-            x:Name="signaturePad" 
-            HeightRequest="300" 
-            WidthRequest="300" 
-            StrokeColor="Black"/>
+        <Frame
+            Margin="20,20,20,20">
+            <signaturePad:SfSignaturePad    
+                x:Name="signaturePad" 
+                HeightRequest="300" 
+                WidthRequest="300" 
+                StrokeColor="Black"/>
+        </Frame>
 
-        <HorizontalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+        <Label     
+               Text="Nombre"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="Black"
+               IsVisible="True"
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               Margin="20,0,0,0"/>
 
-            <Label
-                Margin="10,0,0,10"
-                TextColor="Black"
-                FontAttributes="Bold"
-                FontSize="Body"
-                HorizontalOptions="Start"
-                Text="Nombre:"
-                VerticalOptions="Center" />
+        <Entry x:Name="txtNombres"
+               Placeholder="Ingrese su Nombre"
+               FontSize="16"
+               TextColor="Black"
+               Margin="15,0,20,0"/>
 
-            <Entry
-                x:Name="txtNombres"
-                Margin="15,0,0,10"
-                TextColor="Black"
-                FontAttributes="Bold"
-                FontSize="Body"
-                HorizontalOptions="Center"
-                Keyboard="Text"
-                Placeholder="Ingrese su nombre"
-                VerticalOptions="Center" />
+        <Label     
+               Text="Descripción"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="Black"
+               IsVisible="True"
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               Margin="20,20,0,0"/>
 
-            <Label
-                Margin="-230,90,0,10"
-                TextColor="Black"
-                FontAttributes="Bold"
-                FontSize="Body"
-                HorizontalOptions="Start"
-                Text="Descripcion:"
-                VerticalOptions="Center" />
-
-            <Entry
-                x:Name="txtDescrip"
-                Margin="15,90,0,10"
-                TextColor="Black"
-                FontAttributes="Bold"
-                FontSize="Body"
-                HorizontalOptions="Center"
-                Keyboard="Text"
-                Placeholder="Ingrese una descripcion"
-                VerticalOptions="Center" />
-        </HorizontalStackLayout>
-
+        <Entry x:Name="txtDescrip"
+               Placeholder="Ingrese una descripción"
+               FontSize="16"
+               TextColor="Black"
+               Margin="15,0,20,30"/>
 
         <Button 
+            Margin="20,0,20,0"
+            BackgroundColor="#2b0098"
+            TextColor="White"
+            FontAttributes="Bold"
             Text="Guardar Firma" 
             Clicked="OnSaveButtonClicked"/>
     </StackLayout>
