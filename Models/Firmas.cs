@@ -14,5 +14,7 @@ namespace Ejercicio2._2_Grupo2.Models
         public int Id { get; set; }
         public string ImageFirma { get; set; }
         public DateTime Fecha { get; set; }
+        public string nombres { get; set; }
+        public string descripcion { get; set; }
     }
 }

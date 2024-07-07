@@ -11,7 +11,51 @@
             HeightRequest="300" 
             WidthRequest="300" 
             StrokeColor="Black"/>
-        
+
+        <HorizontalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+
+            <Label
+                Margin="10,0,0,10"
+                TextColor="Black"
+                FontAttributes="Bold"
+                FontSize="Body"
+                HorizontalOptions="Start"
+                Text="Nombre:"
+                VerticalOptions="Center" />
+
+            <Entry
+                x:Name="txtNombres"
+                Margin="15,0,0,10"
+                TextColor="Black"
+                FontAttributes="Bold"
+                FontSize="Body"
+                HorizontalOptions="Center"
+                Keyboard="Text"
+                Placeholder="Ingrese su nombre"
+                VerticalOptions="Center" />
+
+            <Label
+                Margin="-230,90,0,10"
+                TextColor="Black"
+                FontAttributes="Bold"
+                FontSize="Body"
+                HorizontalOptions="Start"
+                Text="Descripcion:"
+                VerticalOptions="Center" />
+
+            <Entry
+                x:Name="txtDescrip"
+                Margin="15,90,0,10"
+                TextColor="Black"
+                FontAttributes="Bold"
+                FontSize="Body"
+                HorizontalOptions="Center"
+                Keyboard="Text"
+                Placeholder="Ingrese una descripcion"
+                VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
+
         <Button 
             Text="Guardar Firma" 
             Clicked="OnSaveButtonClicked"/>

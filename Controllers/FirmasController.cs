@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Org.Apache.Http.Authentication;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,7 @@ namespace Ejercicio2._2_Grupo2.Controllers
 
             _connection = new SQLiteAsyncConnection(Path.Combine(FileSystem.AppDataDirectory, "DBFirma.db3"), extensiones);
             _connection.CreateTableAsync<Models.Firmas>();
-
         }
-
         //Crud Methods
         //Create
         public async Task<int> Store(Models.Firmas firmas)
