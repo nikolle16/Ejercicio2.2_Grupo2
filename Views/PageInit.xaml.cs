@@ -1,22 +1,20 @@
-using Org.Apache.Http.Authentication;
 using Syncfusion.Maui.SignaturePad;
 
 namespace Ejercicio2._2_Grupo2.Views;
 
 public partial class PageInit : ContentPage
 {
-
     Controllers.FirmasController controller;
 
     public PageInit()
     {
-        controller = new Controllers.FirmasController();
         InitializeComponent();
+        controller = new Controllers.FirmasController();
         SfSignaturePad signaturePad = new SfSignaturePad();
     }
+
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-
         ImageSource? source = signaturePad.ToImageSource();
         string base64String = await ImageSourceToBase64(source);
 
@@ -44,13 +42,6 @@ public partial class PageInit : ContentPage
             Fecha = DateTime.Now
         };
 
-        if (await App.DataBase.Store(firma) > 0)
-        {
-            await DisplayAlert("Aviso", "Registro ingresado con éxito", "Ok");
-        }
-
-
-
         try
         {
             if (controller != null)
@@ -59,6 +50,10 @@ public partial class PageInit : ContentPage
                 {
                     await DisplayAlert("Aviso", "Registro Ingresado con Exito!", "OK");
                     await Navigation.PopAsync();
+
+                    signaturePad.Clear();
+                    txtNombres.Text = string.Empty;
+                    txtDescrip.Text = string.Empty;
                 }
                 else
                 {
@@ -87,5 +82,68 @@ public partial class PageInit : ContentPage
             }
         }
         return null;
+    }
+
+    private void OnClearButtonClicked(object? sender, EventArgs e)
+    {
+        signaturePad.Clear();
+    }
+
+    private async void OnDownloadButtonClicked(object? sender, EventArgs e)
+    {
+        try
+        {
+            ImageSource? source = signaturePad.ToImageSource();
+
+            string fileName = txtNombres.Text;
+
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                await DisplayAlert("Error", "Por favor ingrese un nombre para el archivo.", "OK");
+                return;
+            }
+
+            foreach (char c in Path.GetInvalidFileNameChars())
+            {
+                fileName = fileName.Replace(c, '_');
+            }
+
+            fileName = $"firma_{fileName}.png";
+
+            string folderPath = string.Empty;
+
+#if ANDROID
+            folderPath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath;
+#endif
+
+            if (!string.IsNullOrEmpty(folderPath))
+            {
+                string filePath = Path.Combine(folderPath, fileName);
+                if (File.Exists(filePath))
+                {
+                    await DisplayAlert("Error", "Ya existe un archivo con ese nombre. Por favor ingrese un nombre diferente.", "OK");
+                    return;
+                }
+
+                var imageStream = await ((StreamImageSource)source).Stream(System.Threading.CancellationToken.None);
+                using (var memoryStream = new MemoryStream())
+                {
+                    await imageStream.CopyToAsync(memoryStream);
+                    byte[] imageBytes = memoryStream.ToArray();
+
+                    File.WriteAllBytes(filePath, imageBytes);
+
+                    await DisplayAlert("Guardado", "La firma se ha guardado correctamente en: " + filePath, "OK");
+                }
+            }
+            else
+            {
+                await DisplayAlert("Error", "No se pudo obtener la ruta de la carpeta de descargas.", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", "Ocurrió un error al guardar la imagen: " + ex.Message, "OK");
+        }
     }
 }
