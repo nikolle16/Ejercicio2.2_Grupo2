@@ -11,6 +11,11 @@ public partial class PageInit : ContentPage
         InitializeComponent();
         controller = new Controllers.FirmasController();
         SfSignaturePad signaturePad = new SfSignaturePad();
+
+        txtNombres.TextChanged += OnFieldChanged;
+        txtDescrip.TextChanged += OnFieldChanged;
+
+        btnDownloadFirma.IsEnabled = false;
     }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
@@ -22,7 +27,7 @@ public partial class PageInit : ContentPage
 
         if (string.IsNullOrEmpty(Nombres))
         {
-            await DisplayAlert("Error", "Porfavor ingrese el nombre", "OK");
+            await DisplayAlert("Error", "Por favor ingrese el nombre", "OK");
             return;
         }
 
@@ -30,7 +35,7 @@ public partial class PageInit : ContentPage
 
         if (string.IsNullOrEmpty(Descripcion))
         {
-            await DisplayAlert("Error", "Porfavor ingrese una breve descripcion", "OK");
+            await DisplayAlert("Error", "Por favor ingrese una breve descripcion", "OK");
             return;
         }
 
@@ -145,5 +150,16 @@ public partial class PageInit : ContentPage
         {
             await DisplayAlert("Error", "Ocurrió un error al guardar la imagen: " + ex.Message, "OK");
         }
+    }
+
+    private void OnFieldChanged(object sender, TextChangedEventArgs e)
+    {
+        ValidateFields();
+    }
+
+    private void ValidateFields()
+    {
+        btnDownloadFirma.IsEnabled = !string.IsNullOrEmpty(txtNombres.Text) &&
+                                     !string.IsNullOrEmpty(txtDescrip.Text);
     }
 }

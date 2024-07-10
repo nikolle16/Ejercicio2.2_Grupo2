@@ -17,7 +17,7 @@
                     StrokeColor="Red"/>
             </Frame>
 
-            <Button 
+            <Button x:Name="btnDownloadFirma"
                 Margin="20,0,20,0"
                 HeightRequest="50" 
                 WidthRequest="150" 
